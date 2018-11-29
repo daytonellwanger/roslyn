@@ -138,13 +138,11 @@ Namespace Microsoft.CodeAnalysis.VisualBasic.Classification
                 parent = parent.Parent?.Parent
 
                 ' We are specifically looking for field declarations or constants.
-                If parent.IsKind(SyntaxKind.FieldDeclaration) Then
-                    Return False
-                End If
+                Return parent.IsKind(SyntaxKind.FieldDeclaration) AndAlso
+                    parent.GetModifiers().Any(Function(modifier) modifier.IsKind(SyntaxKind.SharedKeyword, SyntaxKind.ConstKeyword))
             End If
 
-            Return parent.GetModifiers().Any(
-                Function(modifier As SyntaxToken) modifier.IsKind(SyntaxKind.SharedKeyword, SyntaxKind.ConstKeyword))
+            Return parent.GetModifiers().Any(SyntaxKind.SharedKeyword)
         End Function
 
         Private Function IsStringToken(token As SyntaxToken) As Boolean

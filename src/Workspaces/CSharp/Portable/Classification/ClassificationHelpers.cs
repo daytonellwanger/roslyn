@@ -223,6 +223,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Classification
                 // The parent of a VariableDeclartor is a VariableDeclarationSyntax node.
                 // It's parent will be the declaration syntax node.
                 parentNode = parentNode.Parent.Parent;
+                return parentNode.GetModifiers().Any(modifier => modifier.IsKind(SyntaxKind.StaticKeyword, SyntaxKind.ConstKeyword));
             }
 
             return parentNode.GetModifiers().Any(SyntaxKind.StaticKeyword);

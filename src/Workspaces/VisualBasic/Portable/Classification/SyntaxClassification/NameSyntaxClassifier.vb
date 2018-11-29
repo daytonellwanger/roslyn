@@ -182,18 +182,21 @@ Namespace Microsoft.CodeAnalysis.VisualBasic.Classification.Classifiers
             span As Text.TextSpan,
             result As ArrayBuilder(Of ClassifiedSpan))
 
-            If symbol Is Nothing Then
+            If symbol Is Nothing OrElse Not symbol.IsStatic Then
                 Return
             End If
 
-            Dim isEnumMember = symbol.IsKind(SymbolKind.Field) AndAlso symbol.ContainingType?.IsEnumType() = True
-            Dim isNamespace = symbol.IsKind(SymbolKind.Namespace)
-
-            If symbol.IsStatic AndAlso
-                Not isEnumMember AndAlso ' TODO: Since Enum members are always Static Is it useful To classify them As Static? 
-                Not isNamespace Then ' TODO: Since Namespace are always static Is it useful to classify them as static?
-                result.Add(New ClassifiedSpan(span, ClassificationTypeNames.StaticSymbol))
+            Dim isEnumMember = symbol.IsKind(SymbolKind.Field) AndAlso symbol.ContainingType.IsEnumType()
+            If (isEnumMember) Then ' TODO: Since Enum members are always Static Is it useful To classify them As Static? 
+                Return
             End If
+
+            Dim isNamespace = symbol.IsKind(SymbolKind.Namespace)
+            If (isNamespace) Then
+                Return ' TODO: Since Namespace are always static Is it useful to classify them as static?
+            End If
+
+            result.Add(New ClassifiedSpan(span, ClassificationTypeNames.StaticSymbol))
         End Sub
 
         Private Function GetClassificationForField(fieldSymbol As IFieldSymbol) As String
