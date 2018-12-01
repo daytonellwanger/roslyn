@@ -19,6 +19,7 @@ using Microsoft.CodeAnalysis.ValidateFormatString;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.LanguageServices.Implementation.Options;
 using Microsoft.VisualStudio.Shell.Interop;
+using Microsoft.Win32;
 using FontsAndColorsCategory = Microsoft.VisualStudio.Shell.Interop.FontsAndColorsCategory;
 
 namespace Microsoft.VisualStudio.LanguageServices.CSharp.Options
@@ -137,19 +138,7 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Options
 
                 var colorItemMap = CreateColorableItemsMap((FontsAndColorsItems)prop.Object);
 
-                var textItem = colorItemMap["Text"];
-                if (textItem.Background == 0x00FFFFFFu)
-                {
-                    // Light or Blue themes
-                    colorItemMap["Identifier"].Foreground = 0x00801000u;
-                    colorItemMap["label name"].Foreground = 0x00000000u;
-                    colorItemMap["namespace name"].Foreground = 0x00AF912Bu;
-                    colorItemMap["method name"].Foreground = 0x001F5374u;
-                    colorItemMap["keyword - control"].Foreground = 0x00C4088Fu;
-                    colorItemMap["operator - overload"].Bold = true;
-                    colorItemMap["static symbol"].Bold = true;
-                }
-                else
+                if (IsDarkTheme())
                 {
                     // Dark Theme
                     colorItemMap["Identifier"].Foreground = 0x00FEDC9Cu;
@@ -160,6 +149,17 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Options
                     colorItemMap["operator - overload"].Bold = true;
                     colorItemMap["static symbol"].Bold = true;
                 }
+                else
+                {
+                    // Light or Blue themes
+                    colorItemMap["Identifier"].Foreground = 0x00801000u;
+                    colorItemMap["label name"].Foreground = 0x00000000u;
+                    colorItemMap["namespace name"].Foreground = 0x00AF912Bu;
+                    colorItemMap["method name"].Foreground = 0x001F5374u;
+                    colorItemMap["keyword - control"].Foreground = 0x00C4088Fu;
+                    colorItemMap["operator - overload"].Bold = true;
+                    colorItemMap["static symbol"].Bold = true;
+                }
             }
 
             private Dictionary<string, ColorableItems> CreateColorableItemsMap(FontsAndColorsItems fontsAndColorsItems)
@@ -167,6 +167,23 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Options
                 return Enumerable.Range(1, fontsAndColorsItems.Count)
                     .Select(index => fontsAndColorsItems.Item(index))
                     .ToDictionary(item => item.Name);
+            }
+
+            private bool IsDarkTheme()
+            {
+                const string DarkThemeGuid = "1ded0138-47ce-435e-84ef-9ec1f439b749";
+                return GetThemeId() == DarkThemeGuid;
+            }
+
+            public string GetThemeId()
+            {
+                const string ThemePropertyName = "CurrentTheme";
+                string keyName = $@"Software\Microsoft\VisualStudio\{dte.Version}\General";
+
+                using (var key = Registry.CurrentUser.OpenSubKey(keyName))
+                {
+                    return key?.GetValue(ThemePropertyName, string.Empty) as string;
+                }
             }
         }
     }
