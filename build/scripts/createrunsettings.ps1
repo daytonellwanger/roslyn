@@ -19,7 +19,7 @@ try {
     $optProfToolExe = Join-Path $optProfToolDir "tools\roslyn.optprof.runsettings.generator.exe"
     $configFile = Join-Path $RepoRoot "build\config\optprof.json"
     $outputFolder = Join-Path $configDir "Insertion\RunSettings"
-    $optProfArgs = "--configFile $configFile --outputFolder $outputFolder --buildNumber 28320.3001 "
+    $optProfArgs = "--configFile $configFile --outputFolder $outputFolder --testsUrl Tests/DevDiv/VS/ded1ed1f2c40eef6bb3e0649b1dde997ae2269d2/e6d1aee0-3736-45da-954d-07c7d9d31aba "
     
     # https://github.com/dotnet/roslyn/issues/31486
     $dest = Join-Path $RepoRoot ".vsts-ci.yml"
