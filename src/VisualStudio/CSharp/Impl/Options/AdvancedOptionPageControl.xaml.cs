@@ -18,6 +18,7 @@ using Microsoft.CodeAnalysis.SymbolSearch;
 using Microsoft.CodeAnalysis.ValidateFormatString;
 using Microsoft.VisualStudio.Editor;
 using Microsoft.VisualStudio.LanguageServices.Implementation.Options;
+using Microsoft.VisualStudio.PlatformUI;
 using Microsoft.VisualStudio.Shell.Interop;
 using Microsoft.Win32;
 using FontsAndColorsCategory = Microsoft.VisualStudio.Shell.Interop.FontsAndColorsCategory;
@@ -177,13 +178,9 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Options
 
             public string GetThemeId()
             {
-                const string ThemePropertyName = "CurrentTheme";
-                string keyName = $@"Software\Microsoft\VisualStudio\{dte.Version}\General";
-
-                using (var key = Registry.CurrentUser.OpenSubKey(keyName))
-                {
-                    return key?.GetValue(ThemePropertyName, string.Empty) as string;
-                }
+                var currentTheme = dte.Properties["Environment", "General"].Item("SelectedTheme").Value;
+                var themeId = currentTheme.GetType().GetProperty("ThemeId").GetValue(currentTheme);
+                return themeId.ToString();
             }
         }
     }
