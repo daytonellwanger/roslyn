@@ -1,8 +1,4 @@
 *REMOVED*static Microsoft.CodeAnalysis.Completion.CompletionItem.Create(string displayText, string filterText = null, string sortText = null, System.Collections.Immutable.ImmutableDictionary<string, string> properties = null, System.Collections.Immutable.ImmutableArray<string> tags = default(System.Collections.Immutable.ImmutableArray<string>), Microsoft.CodeAnalysis.Completion.CompletionItemRules rules = null) -> Microsoft.CodeAnalysis.Completion.CompletionItem
-Microsoft.CodeAnalysis.Completion.CompletionItem.DisplayTextPrefix.get -> string
-Microsoft.CodeAnalysis.Completion.CompletionItem.DisplayTextSuffix.get -> string
-Microsoft.CodeAnalysis.Completion.CompletionItem.WithDisplayTextPrefix(string displayTextPrefix) -> Microsoft.CodeAnalysis.Completion.CompletionItem
-Microsoft.CodeAnalysis.Completion.CompletionItem.WithDisplayTextSuffix(string displayTextSuffix) -> Microsoft.CodeAnalysis.Completion.CompletionItem
 const Microsoft.CodeAnalysis.TextTags.Constant = "Constant" -> string
 const Microsoft.CodeAnalysis.TextTags.EnumMember = "EnumMember" -> string
 const Microsoft.CodeAnalysis.TextTags.ExtensionMethod = "ExtensionMethod" -> string
@@ -16,6 +12,10 @@ const Microsoft.CodeAnalysis.QuickInfo.QuickInfoSectionKinds.Exception = "Except
 const Microsoft.CodeAnalysis.QuickInfo.QuickInfoSectionKinds.Text = "Text" -> string
 const Microsoft.CodeAnalysis.QuickInfo.QuickInfoSectionKinds.TypeParameters = "TypeParameters" -> string
 const Microsoft.CodeAnalysis.QuickInfo.QuickInfoSectionKinds.Usage = "Usage" -> string
+Microsoft.CodeAnalysis.Completion.CompletionItem.DisplayTextPrefix.get -> string
+Microsoft.CodeAnalysis.Completion.CompletionItem.DisplayTextSuffix.get -> string
+Microsoft.CodeAnalysis.Completion.CompletionItem.WithDisplayTextPrefix(string displayTextPrefix) -> Microsoft.CodeAnalysis.Completion.CompletionItem
+Microsoft.CodeAnalysis.Completion.CompletionItem.WithDisplayTextSuffix(string displayTextSuffix) -> Microsoft.CodeAnalysis.Completion.CompletionItem
 Microsoft.CodeAnalysis.QuickInfo.QuickInfoItem
 Microsoft.CodeAnalysis.QuickInfo.QuickInfoItem.RelatedSpans.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.Text.TextSpan>
 Microsoft.CodeAnalysis.QuickInfo.QuickInfoItem.Sections.get -> System.Collections.Immutable.ImmutableArray<Microsoft.CodeAnalysis.QuickInfo.QuickInfoSection>
