@@ -143,8 +143,7 @@ namespace Microsoft.CodeAnalysis.CSharp.Classification.Classifiers
             CancellationToken cancellationToken,
             out ClassifiedSpan classifiedSpan)
         {
-            if (symbol is INamespaceSymbol namespaceSymbol
-                && name is IdentifierNameSyntax identifierNameSyntax)
+            if (symbol is INamespaceSymbol namespaceSymbol && name is IdentifierNameSyntax identifierNameSyntax)
             {
                 // Do not classify the global:: namespace. It is already classified as a keyword.
                 var isGlobalNamespace = namespaceSymbol.IsGlobalNamespace

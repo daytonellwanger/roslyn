@@ -126,8 +126,8 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Options
                 colorItemMap["label name"].Foreground = DefaultForegroundColor;
                 colorItemMap["namespace name"].Foreground = DefaultForegroundColor;
                 colorItemMap["method name"].Foreground = DefaultForegroundColor;
-                colorItemMap["extension method name"].Foreground = DefaultForegroundColor;
                 colorItemMap["keyword - control"].Foreground = DefaultForegroundColor;
+
                 colorItemMap["operator - overload"].Bold = false;
                 colorItemMap["static symbol"].Bold = false;
             }
@@ -147,8 +147,6 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Options
                     colorItemMap["namespace name"].Foreground = 0x00B0C94Eu;
                     colorItemMap["method name"].Foreground = 0x00AADCDCu;
                     colorItemMap["keyword - control"].Foreground = 0x00E694EEu;
-                    colorItemMap["operator - overload"].Bold = true;
-                    colorItemMap["static symbol"].Bold = true;
                 }
                 else
                 {
@@ -158,9 +156,10 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Options
                     colorItemMap["namespace name"].Foreground = 0x00AF912Bu;
                     colorItemMap["method name"].Foreground = 0x001F5374u;
                     colorItemMap["keyword - control"].Foreground = 0x00C4088Fu;
-                    colorItemMap["operator - overload"].Bold = true;
-                    colorItemMap["static symbol"].Bold = true;
                 }
+
+                colorItemMap["operator - overload"].Bold = true;
+                colorItemMap["static symbol"].Bold = true;
             }
 
             private Dictionary<string, ColorableItems> CreateColorableItemsMap(FontsAndColorsItems fontsAndColorsItems)
