@@ -177,9 +177,32 @@ namespace Microsoft.VisualStudio.LanguageServices.CSharp.Options
 
             public string GetThemeId()
             {
-                var currentTheme = dte.Properties["Environment", "General"].Item("SelectedTheme").Value;
-                var themeId = currentTheme.GetType().GetProperty("ThemeId").GetValue(currentTheme);
-                return themeId.ToString();
+                try
+                {
+                    var currentTheme = dte.Properties["Environment", "General"].Item("SelectedTheme").Value;
+                    var themeId = currentTheme.GetType().GetProperty("ThemeId").GetValue(currentTheme);
+                    return themeId.ToString();
+                }
+                catch
+                {
+                    var keyName = $@"Software\Microsoft\VisualStudio\{dte.Version}\ApplicationPrivateSettings\Microsoft\VisualStudio";
+                    using (var key = Registry.CurrentUser.OpenSubKey(keyName))
+                    {
+                        var keyText = key?.GetValue("ColorTheme", string.Empty) as string;
+                        if (string.IsNullOrEmpty(keyText))
+                        {
+                            return null;
+                        }
+
+                        var keyTextValues = keyText.Split('*');
+                        if (keyTextValues.Length < 3)
+                        {
+                            return null;
+                        }
+
+                        return keyTextValues[2];
+                    }
+                }
             }
         }
     }
